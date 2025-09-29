@@ -7,29 +7,31 @@
 
 int main(int argc, char **argv){
     char *line = NULL;
-    bool stop = false;
+    bool cont = true;
     size_t buf_size = 0;
     printf("--- Parser Test Harness ---\n");
     printf("Type 'quit' to exit, or enter a string to parse.\n\n");
+    
 
-
-    while (!stop){
-        printf("min-shell: $");
+    while (cont){
+        printf("min-shell:$ ");
         if (getline(&line, &buf_size, stdin) == -1){
-            stop = true;
+            cont = false;
             break;
         }
-        line[strcspn(line, "\n")] = 0;       //remove last character
-        if (strcmp(line, "quit") == 0) {
-            stop = true;
-            break;
-        }
-        if (strlen(line) == 0) {
-            continue;
-        }
-        
-        
-    }
+        line[strcspn(line, "\n")] = 0;       // remove last character
 
+        int size_pipeline = 0;
+        pipeline_t* pipelines = parse_pipeline(line, &size_pipeline);                      
+        printf("Number of commands in pipeline: %d\n", size_pipeline);
+        cont = execute_pipeline(pipelines, size_pipeline);                                
+        
+        if (pipelines != NULL) {
+            free(pipelines);
+        }
+    }
+    free(line);
     return EXIT_SUCCESS;
 }
+
+

@@ -13,26 +13,7 @@ typedef struct {
     bool append_output;
 } command_t;
 
-typedef struct {
-    char *name;
-    bool (*function)(command_t*);
-} builtin_t;
-
-const builtin_t builtins[] = {
-    {"cd", &execute_cd},
-    {"exit", &execute_exit}
-};
-
-void execute_pipeline(command_t* command);
-
-void execute_command(command_t* command);
-
-bool check_builtin(command_t* command);
-
-bool execute_builtin_command(command_t* command);
-
-bool execute_cd(command_t* command);
-
-bool execute_exit(command_t* command);
-
+bool execute_command(command_t* command);
+void print_command(command_t* cmd); 
+void free_command(command_t* cmd);
 #endif
