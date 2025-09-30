@@ -17,12 +17,10 @@ int check_builtin(command_t* c){
         return -1;
     }
     char *first_arg = c->args[0];
-    printf("built-in check - first arg: %s|", first_arg);
     int size_ = sizeof(builtins) / sizeof(builtin_t);
     for (int i = 0; i < size_; i++) {
         if (strcmp(first_arg, builtins[i].name) == 0) {
             pos = i; 
-            printf("is _builtin !");
             break;
         }
     }

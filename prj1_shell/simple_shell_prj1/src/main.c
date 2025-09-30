@@ -1,4 +1,4 @@
-
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -6,6 +6,9 @@
 #include "./parse/parser.h"
 
 int main(int argc, char **argv){
+
+
+
     char *line = NULL;
     bool cont = true;
     size_t buf_size = 0;
@@ -14,7 +17,7 @@ int main(int argc, char **argv){
     
 
     while (cont){
-        printf("min-shell:$ ");
+        printf(" \nmin-shell:$ ");
         if (getline(&line, &buf_size, stdin) == -1){
             cont = false;
             break;
@@ -23,7 +26,7 @@ int main(int argc, char **argv){
 
         int size_pipeline = 0;
         pipeline_t* pipelines = parse_pipeline(line, &size_pipeline);                      
-        printf("Number of commands in pipeline: %d\n", size_pipeline);
+        // printf("Number of commands in pipeline: %d\n", size_pipeline);
         cont = execute_pipeline(pipelines, size_pipeline);                                
         
         if (pipelines != NULL) {
