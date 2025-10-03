@@ -31,6 +31,7 @@ bool execute_pipeline(pipeline_t* pipeline_ls, int size){
         int is_builtin = check_builtin(command);
         if (is_builtin >= 0) {
             cont = execute_builtin_command(command, is_builtin);
+            pids[i] = -1;
             continue;
         }
 
@@ -38,7 +39,7 @@ bool execute_pipeline(pipeline_t* pipeline_ls, int size){
         int out_fd = STDOUT_FILENO;
 
         if (i < size - 1) {
-            if (pipe(pipe_fds) == -1) {                                 //connecting the pipe woth pipe() system call
+            if (pipe(pipe_fds) == -1) {                                 //connecting the pipe with pipe() system call
                 perror("pipe");
                 break; 
             }
@@ -56,11 +57,14 @@ bool execute_pipeline(pipeline_t* pipeline_ls, int size){
         if (i < size - 1) { in_fd = pipe_fds[0];}                       // continue the pipeline
     }
 
-     for (int i = 0; i < count; i++) {
+    for (int i = 0; i < count; i++) {
         if (pids[i] > 0) {
             int status;
             waitpid(pids[i], &status, 0);
-            if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {cont = false;}
+            if (!WIFEXITED(status) || WEXITSTATUS(status) != 0) {
+                printf("Process %d exited with status %d\n", pids[i], WEXITSTATUS(status));
+                print_command(command_ls[i]);
+            }
         }
     }
 
@@ -71,6 +75,17 @@ bool execute_pipeline(pipeline_t* pipeline_ls, int size){
     free(command_ls);
 
     return cont;
+}
+
+
+void free_pipeline(pipeline_t* pipelines) {
+    if (pipelines == NULL) {
+        return;
+    }
+    for (int i = 0; pipelines[i] != NULL; i++) {
+        free(pipelines[i]);
+    }
+    free(pipelines);
 }
 
 

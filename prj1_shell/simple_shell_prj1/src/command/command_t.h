@@ -13,7 +13,7 @@ typedef struct {
     bool append_output;
 } command_t;
 
-bool execute_command(command_t* command, int in_fd, int out_fd);
+void execute_command(command_t* command, int in_fd, int out_fd);
 void print_command(command_t* cmd); 
 void free_command(command_t* cmd);
 #endif

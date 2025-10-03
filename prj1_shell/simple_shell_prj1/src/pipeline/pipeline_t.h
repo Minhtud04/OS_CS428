@@ -10,5 +10,5 @@
 typedef char* pipeline_t;     
 
 bool execute_pipeline(pipeline_t* pipeline_ls, int size);
-
+void free_pipeline(pipeline_t* pipelines);
 #endif

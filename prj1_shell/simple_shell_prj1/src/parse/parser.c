@@ -8,7 +8,7 @@
 #define PIPE_DELIM "|"
 
 
-pipeline_t* parse_pipeline(char *line, int* size){               // char* pipeline_t -> pipeline_t is a string !
+pipeline_t* parse_pipeline(char *line, int* size){               // char* pipeline_t -> pipeline_t is a string
     char *command_str[MAX_COMMANDS];
     char *token;
     int count = 0;

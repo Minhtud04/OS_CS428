@@ -9,7 +9,7 @@
 
 
 
-bool execute_command(command_t* command, int in_fd, int out_fd){
+void execute_command(command_t* command, int in_fd, int out_fd){
     if (in_fd != STDIN_FILENO) {
         dup2(in_fd, STDIN_FILENO);
         close(in_fd);

@@ -6,9 +6,6 @@
 #include "./parse/parser.h"
 
 int main(int argc, char **argv){
-
-
-
     char *line = NULL;
     bool cont = true;
     size_t buf_size = 0;
@@ -30,7 +27,7 @@ int main(int argc, char **argv){
         cont = execute_pipeline(pipelines, size_pipeline);                                
         
         if (pipelines != NULL) {
-            free(pipelines);
+            free_pipeline(pipelines);
         }
     }
     free(line);
