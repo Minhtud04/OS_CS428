@@ -83,7 +83,8 @@ void print_long_format(const char *dir_path, const char *filename) {
 }
 
 /**
- * mainly wrap around opendir and readdir. manipulate given DIR struct 
+ * opendir -> load into buffer, return a pointer
+ * readdir -> access through this pointer + read data inside
  */
 int main(int argc, char *argv[]) {
     int long_format = 0;
